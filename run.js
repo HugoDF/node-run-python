@@ -1,25 +1,42 @@
 const { spawn } = require('child_process')
 
-const logOutput = (name) => (data) => console.log(`[${name}] ${data.toString()}`)
+const logOutput = (name) => (data) => console.log(`[${name}] ${data}`)
 
 function run() {
-  const process = spawn('python', ['./script.py', 'my', 'args']);
+  return new Promise((resolve, reject) => {
+    const process = spawn('python', ['./script.py', 'my', 'args']);
 
-  process.stdout.on(
-    'data',
-    logOutput('stdout')
-  );
+    const out = []
+    process.stdout.on(
+      'data',
+      (data) => {
+        out.push(data.toString());
+        logOutput('stdout')(data);
+      }
+    );
 
-  process.stderr.on(
-    'data',
-    logOutput('stderr')
-  );
+
+    const err = []
+    process.stderr.on(
+      'data',
+      (data) => {
+        err.push(data.toString());
+        logOutput('stderr')(data);
+      }
+    );
+
+    process.on('exit', (code, signal) => {
+      logOutput('exit')(`${code} (${signal})`)
+      resolve(out);
+    });
+  });
 }
 
-(() => {
+(async () => {
   try {
-    run()
-    // process.exit(0)
+    const output = await run()
+    logOutput('main')(output)
+    process.exit(0)
   } catch (e) {
     console.error(e.stack);
     process.exit(1);
