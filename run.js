@@ -1,6 +1,6 @@
 const { spawn } = require('child_process')
 
-const logOutput = (name) => (data) => console.log(`[${name}] ${data}`)
+const logOutput = (name) => (message) => console.log(`[${name}] ${message}`)
 
 function run() {
   return new Promise((resolve, reject) => {
@@ -39,7 +39,7 @@ function run() {
 (async () => {
   try {
     const output = await run()
-    logOutput('main')(output)
+    logOutput('main')(output.message)
     process.exit(0)
   } catch (e) {
     console.error('Error during script execution ', e.stack);
