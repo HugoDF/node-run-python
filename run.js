@@ -3,7 +3,7 @@ const { spawn } = require('child_process')
 const logOutput = (name) => (data) => console.log(`[${name}] ${data.toString()}`)
 
 function run() {
-  const process = spawn('python', ['./script.py']);
+  const process = spawn('python', ['./script.py', 'my', 'args']);
 
   process.stdout.on(
     'data',
