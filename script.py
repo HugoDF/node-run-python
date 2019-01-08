@@ -1,3 +1,3 @@
 import sys
 
-print(sys.argv)[1:]
+print(sy.argv)[1:]

@@ -27,7 +27,11 @@ function run() {
 
     process.on('exit', (code, signal) => {
       logOutput('exit')(`${code} (${signal})`)
-      resolve(out);
+      if (code === 0) {
+        resolve(out);
+      } else {
+        reject(new Error(err.join('\n')))
+      }
     });
   });
 }
@@ -38,7 +42,7 @@ function run() {
     logOutput('main')(output)
     process.exit(0)
   } catch (e) {
-    console.error(e.stack);
+    console.error('Error during script execution ', e.stack);
     process.exit(1);
   }
 })();
