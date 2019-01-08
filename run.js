@@ -27,10 +27,14 @@ function run() {
 
     process.on('exit', (code, signal) => {
       logOutput('exit')(`${code} (${signal})`)
-      if (code === 0) {
-        resolve(out);
-      } else {
+      if (code !== 0) {
         reject(new Error(err.join('\n')))
+        return
+      }
+      try {
+        resolve(JSON.parse(out[0]));
+      } catch(e) {
+        reject(e);
       }
     });
   });
