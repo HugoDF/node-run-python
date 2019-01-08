@@ -1,0 +1,13 @@
+{
+  "name": "node-run-python",
+  "version": "0.0.1",
+  "description": "",
+  "main": "run.js",
+  "scripts": {
+    "start": "node run.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["node", "python"],
+  "author": "",
+  "license": "MIT"
+}
