@@ -1,8 +1,9 @@
 const { spawn } = require('child_process')
 
 const logOutput = (name) => (data) => console.log(`[${name}] ${data.toString()}`)
+
 function run() {
-  const process = spawn('python', ['--version']);
+  const process = spawn('python', ['./script.py']);
 
   process.stdout.on(
     'data',
